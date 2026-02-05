@@ -1,6 +1,7 @@
 unit Main;
 
 /// ---------------------------------------------------------------------------
+///  Rich GUI web application for InterSystems IRIS database.
 ///  Copyright © 2026 RocketCitySoft LLC
 ///  https://www.rocketcitysoft.com
 ///
@@ -126,6 +127,8 @@ var
   Q: TFDQuery;
   G: TUniDBGrid;
 begin
+  if not Assigned(UniTreeMenu1.Selected) then Exit;
+
   // 1) Hide all frames currently in WorkArea
   for I := 0 to WorkArea.ComponentCount - 1 do
     if WorkArea.Components[I] is TUniFrame then

@@ -15,12 +15,12 @@
 interface
 
 uses
-  System.Generics.Collections, uniGUIMainModule, SysUtils, Classes, UniGUIFrame,
-  Data.Bind.Components, Data.Bind.ObjectScope, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.ODBC,
-  FireDAC.Phys.ODBCDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  System.Generics.Collections, SysUtils, Classes, uniGUIMainModule,
+  UniGUIFrame, Data.Bind.Components, Data.Bind.ObjectScope, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.ODBC, FireDAC.Phys.ODBCDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, UniDBGrid, uniGUIBaseClasses, uniImageList,
   System.ImageList, Vcl.ImgList, FireDAC.Stan.StorageBin;
 
@@ -172,47 +172,52 @@ var
   Q: TFDQuery;
   RealIP, CID, IP, UA: string;
 begin
-  {
-    connection.ini format
-    ----------------------
-    DataSource=myCache
-    User_Name=...
-    Password=...
-    ODBCDriver=InterSystems IRIS ODBC35
-    Database=CLIENTAPP
-    DriverID=ODBC
-    ----------------------
-  }
-  FDConnection.Params.LoadFromFile('connection.ini');
-  FCache := TObjectDictionary<string, TUniFrame>.Create();
-  for I := 0 to ComponentCount - 1 do
-    if Components[I] is TFDQuery then
-    begin
-      Q := TFDQuery(Components[I]);
-      //mtSQLQueries is just an SQL text cache so we can use it in FIlterDialog
-      if not mtSQLQueries.Locate('QueryName', Q.Name, [loCaseInsensitive]) then begin
-        mtSQLQueries.Append;
-        mtSQLQueries['QueryName'] := Q.Name;
-        mtSQLQueries['SQL'] := Q.SQL.Text;
-        mtSQLQueries.Post;
+  try
+    {
+      connection.ini format
+      ----------------------
+      DataSource=myCache
+      User_Name=...
+      Password=...
+      ODBCDriver=InterSystems IRIS ODBC35
+      Database=CLIENTAPP
+      DriverID=ODBC
+      ----------------------
+    }
+    FDConnection.Params.LoadFromFile('connection.ini');
+    FCache := TObjectDictionary<string, TUniFrame>.Create();
+    for I := 0 to ComponentCount - 1 do
+      if Components[I] is TFDQuery then
+      begin
+        Q := TFDQuery(Components[I]);
+        //mtSQLQueries is just an SQL text cache so we can use it in FIlterDialog
+        if not mtSQLQueries.Locate('QueryName', Q.Name, [loCaseInsensitive]) then begin
+          mtSQLQueries.Append;
+          mtSQLQueries['QueryName'] := Q.Name;
+          mtSQLQueries['SQL'] := Q.SQL.Text;
+          mtSQLQueries.Post;
+        end;
       end;
+
+    // 1. Try to read existing cookie
+    CID := UniSession.UniApplication.Cookies.GetCookie('ClientID');
+
+    // 2. If cookie missing → create one
+    if CID = '' then
+    begin
+      CID := TGUID.NewGuid.ToString;
+      UniSession.UniApplication.Cookies.SetCookie('ClientID', CID, Now + 3650); // 10 years
     end;
 
-  // 1. Try to read existing cookie
-  CID := UniSession.UniApplication.Cookies.GetCookie('ClientID');
-
-  // 2. If cookie missing → create one
-  if CID = '' then
-  begin
-    CID := TGUID.NewGuid.ToString;
-    UniSession.UniApplication.Cookies.SetCookie('ClientID', CID, Now + 3650); // 10 years
+    RealIP := UniSession.RequestHeader['X-Forwarded-For'];
+    if RealIP = '' then
+      RealIP := 'RemoteHost: ' + UniSession.RemoteHost + ' RemoteIP: ' + UniSession.RemoteIP; // fallback
+    // 3. Log session start
+    ClientTracker.LogSessionStart(CID, UniSession.SessionID, RealIP, UniSession.UserAgent);
+  except
+    on E: Exception do
+      UniSession.Terminate(E.Message);
   end;
-
-  RealIP := UniSession.RequestHeader['X-Forwarded-For'];
-  if RealIP = '' then
-    RealIP := 'RemoteHost: ' + UniSession.RemoteHost + ' RemoteIP: ' + UniSession.RemoteIP; // fallback
-  // 3. Log session start
-  ClientTracker.LogSessionStart(CID, UniSession.SessionID, RealIP, UniSession.UserAgent);
 end;
 
 procedure TUniMainModule.UniGUIMainModuleDestroy(Sender: TObject);
