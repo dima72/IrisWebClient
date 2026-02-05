@@ -15,16 +15,36 @@
 interface
 
 uses
-  System.Generics.Collections, SysUtils, Classes, uniGUIMainModule,
-  UniGUIFrame, Data.Bind.Components, Data.Bind.ObjectScope, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
-  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
-  FireDAC.Phys.ODBC, FireDAC.Phys.ODBCDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
-  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, UniDBGrid, uniGUIBaseClasses, uniImageList,
-  System.ImageList, Vcl.ImgList, FireDAC.Stan.StorageBin;
+  System.Generics.Collections, SysUtils, Classes, uniGUIApplication, UniGUIVars,
+  UniGUIFrame, uniGUIMainModule, UniDBGrid, uniGUIBaseClasses, uniImageList,
+  System.ImageList, Vcl.ImgList, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.ODBC,
+  FireDAC.Phys.ODBCDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Stan.StorageBin, FireDAC.Comp.Client,
+  Data.DB, FireDAC.Comp.DataSet;
 
 type
+
+  TModuleInfo = class
+    Name: string;
+    Icon: string;
+    IconIndex: Integer;
+    FrameClass: TUniFrameClass;
+    MainQuery: string;
+  end;
+
+  TModuleRegistry = class
+  private
+    class var FList: TObjectList<TModuleInfo>;
+  public
+    class constructor Create;
+    class destructor Destroy;
+    class procedure RegisterModule(const AName: string; AIconIndex: Integer; AFrame: TUniFrameClass; AMainQueryName: string);
+    class function GetModules: TObjectList<TModuleInfo>;
+    class function FindModule(const AName: string): TModuleInfo;
+  end;
+
   TUniMainModule = class(TUniGUIMainModule)
     FDConnection: TFDConnection;
     qryPerson: TFDQuery;
@@ -108,7 +128,7 @@ implementation
 {$R *.dfm}
 
 uses
-  UniGUIVars, ServerModule, uniGUIApplication, ModuleRegistry;
+  ServerModule;
 
 procedure CheckError(AYes: Boolean; const AMessage: string);
 begin
@@ -225,6 +245,47 @@ begin
   FCache.Free;
   FCache := nil;
 end;
+
+//-----------------------------TModuleRegistry------------------------------------
+
+class constructor TModuleRegistry.Create;
+begin
+  FList := TObjectList<TModuleInfo>.Create;
+end;
+
+class destructor TModuleRegistry.Destroy;
+begin
+  FList.Free;
+end;
+
+class procedure TModuleRegistry.RegisterModule(const AName: string; AIconIndex: Integer; AFrame: TUniFrameClass; AMainQueryName: string);
+var
+  M: TModuleInfo;
+begin
+  M := TModuleInfo.Create;
+  M.Name := AName;
+  M.IconIndex := AIconIndex;
+  M.FrameClass := AFrame;
+  M.MainQuery := AMainQueryName;
+  FList.Add(M);
+end;
+
+class function TModuleRegistry.GetModules: TObjectList<TModuleInfo>;
+begin
+  Result := FList;
+end;
+
+class function TModuleRegistry.FindModule(const AName: string): TModuleInfo;
+var
+  M: TModuleInfo;
+begin
+  Result := nil;
+
+  for M in FList do
+    if SameText(M.Name, AName) then
+      Exit(M);
+end;
+
 
 initialization
   RegisterMainModuleClass(TUniMainModule);

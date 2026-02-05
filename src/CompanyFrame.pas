@@ -1,7 +1,6 @@
 unit CompanyFrame;
 
 /// ---------------------------------------------------------------------------
-///  RocketCitySoft IRIS Contest Module
 ///  Copyright © 2026 RocketCitySoft LLC
 ///  https://www.rocketcitysoft.com
 ///
@@ -40,7 +39,7 @@ implementation
 
 {$R *.dfm}
 
-uses MainModule, ModuleRegistry;
+uses MainModule;
 
 procedure TCompanyFrme.UniFrameCreate(Sender: TObject);
 begin

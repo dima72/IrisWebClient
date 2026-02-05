@@ -34,7 +34,7 @@ object PersonFrme: TPersonFrme
       end
       item
         WidgetColumn.Enabled = True
-        WidgetColumn.Widget = UniButtonWidget1
+        WidgetColumn.Widget = ctlSpouseWidget
         FieldName = 'SpouseName'
         Title.Caption = 'SpouseName'
         Width = 130
@@ -99,9 +99,9 @@ object PersonFrme: TPersonFrme
         Width = 58
       end>
   end
-  object UniHiddenPanel1: TUniHiddenPanel
-    Left = 112
-    Top = 88
+  object ctlHiddenPanelCaledar: TUniHiddenPanel
+    Left = 152
+    Top = 141
     Width = 193
     Height = 201
     Hint = ''
@@ -117,21 +117,21 @@ object PersonFrme: TPersonFrme
       TabOrder = 1
     end
   end
-  object UniHiddenPanel2: TUniHiddenPanel
-    Left = 423
-    Top = 88
+  object ctlHiddenPanelSpouse: TUniHiddenPanel
+    Left = 390
+    Top = 141
     Width = 177
     Height = 201
     Hint = ''
     Visible = True
-    object UniButtonWidget1: TUniButtonWidget
+    object ctlSpouseWidget: TUniButtonWidget
       Left = 32
       Top = 32
       Width = 120
       Hint = ''
       ImageIndex = 0
-      OnClick = UniButtonWidget1Click
-      Caption = 'UniButtonWidget1'
+      OnClick = ctlSpouseWidgetClick
+      Caption = 'ctlSpouseWidget'
     end
   end
   inline Navigator: TNavigatorFrme
@@ -152,8 +152,8 @@ object PersonFrme: TPersonFrme
       end
     end
   end
-  object UniHiddenPanel4: TUniHiddenPanel
-    Left = 760
+  object ctlHiddenPanelUSState: TUniHiddenPanel
+    Left = 848
     Top = 141
     Width = 193
     Height = 124
@@ -176,9 +176,9 @@ object PersonFrme: TPersonFrme
       MatchFieldWidth = False
     end
   end
-  object UniHiddenPanel3: TUniHiddenPanel
-    Left = 606
-    Top = 245
+  object ctlHiddenPanelUSState2: TUniHiddenPanel
+    Left = 614
+    Top = 141
     Width = 193
     Height = 124
     Hint = ''
@@ -202,16 +202,16 @@ object PersonFrme: TPersonFrme
   end
   object dsrMain: TDataSource
     DataSet = UniMainModule.qryPerson
-    Left = 104
+    Left = 40
     Top = 56
   end
   object UniImageListAdapter1: TUniImageListAdapter
-    Left = 336
-    Top = 352
+    Left = 40
+    Top = 128
   end
   object dsrStates: TDataSource
     DataSet = UniMainModule.mtStates
-    Left = 184
-    Top = 64
+    Left = 112
+    Top = 56
   end
 end

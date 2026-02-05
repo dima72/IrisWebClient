@@ -24,12 +24,12 @@ uses
 type
   TPersonDictFrm = class(TUniForm)
     grdMain: TUniDBGrid;
-    DataSource1: TDataSource;
+    dsrMain: TDataSource;
     UniPanel1: TUniPanel;
-    UniButton2: TUniButton;
-    UniButton1: TUniButton;
+    btnCancel: TUniButton;
+    btnOK: TUniButton;
     Navigator: TNavigatorFrme;
-    procedure UniButton1Click(Sender: TObject);
+    procedure btnOKClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormReady(Sender: TObject);
     procedure UniFormClose(Sender: TObject; var Action: TCloseAction);
@@ -48,14 +48,14 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  MainModule;
 
 function PersonDictFrm: TPersonDictFrm;
 begin
   Result := TPersonDictFrm(UniMainModule.GetFormInstance(TPersonDictFrm));
 end;
 
-procedure TPersonDictFrm.UniButton1Click(Sender: TObject);
+procedure TPersonDictFrm.btnOKClick(Sender: TObject);
 begin
   MessageDlg('Assign the Spouse?', mtConfirmation, [mbYes, mbNo],
   procedure(Sender: TComponent; Res: Integer)
@@ -79,6 +79,7 @@ end;
 procedure TPersonDictFrm.UniFormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+  // to use less memory
   UniMainModule.qryPersonDict.Close;
 end;
 

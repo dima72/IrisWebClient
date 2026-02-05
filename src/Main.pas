@@ -17,7 +17,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
+  Controls, Forms, uniGUITypes, uniGUIAbstractClasses, uniGUIVars,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniGUIBaseClasses, uniTreeView,
   uniTreeMenu, unimTreeMenu, unimMenu, uniGUImJSForm, unimPanel, uniSplitter,
   Vcl.Menus, uniMainMenu, System.Actions, Vcl.ActnList, uniToolBar, uniGUIFrame,
@@ -29,23 +29,19 @@ uses
 
 type
   TMainForm = class(TUniForm)
-    UniMainMenu1: TUniMainMenu;
+    mnuMain: TUniMainMenu;
     File1: TUniMenuItem;
     Exit1: TUniMenuItem;
-    UniActionList1: TUniActionList;
+    alMain: TUniActionList;
     acPersonDict: TAction;
     WorkArea: TUniContainerPanel;
     UniTreeMenu1: TUniTreeMenu;
     UniSplitter1: TUniSplitter;
-    tmrOnShow: TUniTimer;
     UniHTMLFrame1: TUniHTMLFrame;
     acExit: TAction;
-    UniNativeImageList1: TUniNativeImageList;
+    ilMenu: TUniNativeImageList;
     procedure UniFormCreate(Sender: TObject);
     procedure UniTreeMenu1Click(Sender: TObject);
-    procedure UniFormAfterShow(Sender: TObject);
-    procedure UniFormShow(Sender: TObject);
-    procedure tmrOnShowTimer(Sender: TObject);
     procedure acExitExecute(Sender: TObject);
   private
     { Private declarations }
@@ -60,16 +56,11 @@ implementation
 {$R *.dfm}
 
 uses
-  uniGUIVars, MainModule, uniGUIApplication, PersonForm, ModuleRegistry;
+  MainModule, uniGUIApplication;
 
 function MainForm: TMainForm;
 begin
   Result := TMainForm(UniMainModule.GetFormInstance(TMainForm));
-end;
-
-procedure TMainForm.UniFormAfterShow(Sender: TObject);
-begin
-  Caption := 'InterSystems Full Stack Contest 2026';
 end;
 
 procedure TMainForm.UniFormCreate(Sender: TObject);
@@ -101,22 +92,11 @@ begin
       'e.g. Person->Spouse->Name, Employee->Company->Name.<br>'+
       '</span> </div>';
   end;
-
-end;
-
-procedure TMainForm.UniFormShow(Sender: TObject);
-begin
-  tmrOnShow.Enabled := True;
 end;
 
 procedure TMainForm.acExitExecute(Sender: TObject);
 begin
   UniSession.Terminate('Goodbye');
-end;
-
-procedure TMainForm.tmrOnShowTimer(Sender: TObject);
-begin
-  tmrOnShow.Enabled := False;
 end;
 
 procedure TMainForm.UniTreeMenu1Click(Sender: TObject);

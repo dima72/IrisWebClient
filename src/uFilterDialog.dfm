@@ -25,7 +25,7 @@ object frmFilter: TfrmFilter
         FieldName = 'FieldName'
         Title.Caption = 'FieldName'
         Width = 102
-        Editor = UniDBLookupComboBox2
+        Editor = cbFieldNames
       end
       item
         FieldName = 'Operator'
@@ -70,7 +70,7 @@ object frmFilter: TfrmFilter
       TabOrder = 1
     end
     object UniToolButton1: TUniToolButton
-      Left = 42
+      Left = 23
       Top = 0
       Constraints.MinHeight = 42
       Constraints.MinWidth = 42
@@ -88,7 +88,6 @@ object frmFilter: TfrmFilter
     Align = alBottom
     TabOrder = 2
     Caption = ''
-    ExplicitTop = 205
     DesignSize = (
       476
       45)
@@ -125,14 +124,14 @@ object frmFilter: TfrmFilter
       OnClick = btnClearFilterClick
     end
   end
-  object UniHiddenPanel1: TUniHiddenPanel
+  object ctlUniHiddenPanel1: TUniHiddenPanel
     Left = 259
     Top = 67
     Width = 193
     Height = 110
     Hint = ''
     Visible = True
-    object UniDBLookupComboBox2: TUniDBLookupComboBox
+    object cbFieldNames: TUniDBLookupComboBox
       Left = 48
       Top = 27
       Width = 113
@@ -161,8 +160,8 @@ object frmFilter: TfrmFilter
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 56
-    Top = 88
+    Left = 32
+    Top = 24
     object mtFilterFieldName: TStringField
       DisplayWidth = 31
       FieldName = 'FieldName'
@@ -185,8 +184,8 @@ object frmFilter: TfrmFilter
   end
   object dsFilter: TDataSource
     DataSet = mtFilter
-    Left = 152
-    Top = 88
+    Left = 120
+    Top = 24
   end
   object mtFieldNames: TFDMemTable
     Active = True
@@ -198,8 +197,8 @@ object frmFilter: TfrmFilter
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 160
-    Top = 144
+    Left = 120
+    Top = 88
     Content = {
       4144425310000000F4000000FF00010001FF02FF030400180000006D00740046
       00690065006C0064004E0061006D00650073000500180000006D007400460069
@@ -236,12 +235,12 @@ object frmFilter: TfrmFilter
   end
   object dsrFieldNames: TDataSource
     DataSet = mtFieldNames
-    Left = 64
-    Top = 152
-  end
-  object UniActionList1: TUniActionList
-    Left = 224
+    Left = 32
     Top = 80
+  end
+  object alMain: TUniActionList
+    Left = 192
+    Top = 24
     object acAdd: TAction
       Caption = 'Add'
       OnExecute = acAddExecute

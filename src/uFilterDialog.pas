@@ -40,11 +40,11 @@ type
     btnApplyFilter: TUniButton;
     mtFieldNames: TFDMemTable;
     mtFieldNamesFieldName: TStringField;
-    UniHiddenPanel1: TUniHiddenPanel;
-    UniDBLookupComboBox2: TUniDBLookupComboBox;
+    ctlUniHiddenPanel1: TUniHiddenPanel;
+    cbFieldNames: TUniDBLookupComboBox;
     dsrFieldNames: TDataSource;
     btnAdd: TUniToolButton;
-    UniActionList1: TUniActionList;
+    alMain: TUniActionList;
     acAdd: TAction;
     acDelete: TAction;
     UniToolButton1: TUniToolButton;

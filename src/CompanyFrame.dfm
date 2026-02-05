@@ -77,7 +77,7 @@ object CompanyFrme: TCompanyFrme
   end
   object dsrMain: TDataSource
     DataSet = UniMainModule.qryCompany
-    Left = 104
-    Top = 56
+    Left = 40
+    Top = 64
   end
 end

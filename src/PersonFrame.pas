@@ -31,18 +31,18 @@ type
   TPersonFrme = class(TUniFrame)
     grdMain: TUniDBGrid;
     dsrMain: TDataSource;
-    UniHiddenPanel1: TUniHiddenPanel;
+    ctlHiddenPanelCaledar: TUniHiddenPanel;
     UniDateTimePicker2: TUniDateTimePicker;
-    UniHiddenPanel2: TUniHiddenPanel;
-    UniButtonWidget1: TUniButtonWidget;
+    ctlHiddenPanelSpouse: TUniHiddenPanel;
+    ctlSpouseWidget: TUniButtonWidget;
     UniImageListAdapter1: TUniImageListAdapter;
     Navigator: TNavigatorFrme;
-    UniHiddenPanel4: TUniHiddenPanel;
+    ctlHiddenPanelUSState: TUniHiddenPanel;
     cbUSState: TUniDBLookupComboBox;
-    UniHiddenPanel3: TUniHiddenPanel;
+    ctlHiddenPanelUSState2: TUniHiddenPanel;
     cbUSState2: TUniDBLookupComboBox;
     dsrStates: TDataSource;
-    procedure UniButtonWidget1Click(Sender: TObject);
+    procedure ctlSpouseWidgetClick(Sender: TObject);
     procedure UniFrameCreate(Sender: TObject);
   private
     { Private declarations }
@@ -54,9 +54,9 @@ implementation
 
 {$R *.dfm}
 
-uses MainModule, ModuleRegistry, PersonDictForm;
+uses MainModule, PersonDictForm;
 
-procedure TPersonFrme.UniButtonWidget1Click(Sender: TObject);
+procedure TPersonFrme.ctlSpouseWidgetClick(Sender: TObject);
 begin
   with PersonDictFrm, UniMainModule do begin
     TargetDataSet := qryPerson;

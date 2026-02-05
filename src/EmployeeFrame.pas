@@ -1,7 +1,6 @@
 unit EmployeeFrame;
 
 /// ---------------------------------------------------------------------------
-///  RocketCitySoft IRIS Contest Module
 ///  Copyright © 2026 RocketCitySoft LLC
 ///  https://www.rocketcitysoft.com
 ///
@@ -29,17 +28,17 @@ type
   TEmployeeFrme = class(TUniFrame)
     grdMain: TUniDBGrid;
     dsrMain: TDataSource;
-    UniHiddenPanel1: TUniHiddenPanel;
-    UniDateTimePicker2: TUniDateTimePicker;
-    UniHiddenPanel2: TUniHiddenPanel;
-    UniButtonWidget1: TUniButtonWidget;
+    ctlHiddenPanelCalendar: TUniHiddenPanel;
+    ctlDateTimePicker: TUniDateTimePicker;
+    ctlHiddenPanelSpouse: TUniHiddenPanel;
+    ctlUniButtonWidget: TUniButtonWidget;
     Navigator: TNavigatorFrme;
-    UniHiddenPanel4: TUniHiddenPanel;
+    ctlHiddenPanelUSState: TUniHiddenPanel;
     cbUSState: TUniDBLookupComboBox;
     dsrStates: TDataSource;
-    UniHiddenPanel3: TUniHiddenPanel;
+    ctlHiddenPanelUSState2: TUniHiddenPanel;
     cbUSState2: TUniDBLookupComboBox;
-    procedure UniButtonWidget1Click(Sender: TObject);
+    procedure ctlUniButtonWidgetClick(Sender: TObject);
     procedure UniFrameCreate(Sender: TObject);
   private
     { Private declarations }
@@ -51,9 +50,9 @@ implementation
 
 {$R *.dfm}
 
-uses MainModule, ModuleRegistry, PersonDictForm;
+uses MainModule, PersonDictForm;
 
-procedure TEmployeeFrme.UniButtonWidget1Click(Sender: TObject);
+procedure TEmployeeFrme.ctlUniButtonWidgetClick(Sender: TObject);
 begin
   PersonDictFrm.TargetDataSet := UniMainModule.qryEmployee;
   PersonDictFrm.ShowModal();

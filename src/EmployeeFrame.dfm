@@ -29,7 +29,7 @@ object EmployeeFrme: TEmployeeFrme
       end
       item
         WidgetColumn.Enabled = True
-        WidgetColumn.Widget = UniButtonWidget1
+        WidgetColumn.Widget = ctlUniButtonWidget
         FieldName = 'SpouseName'
         Title.Caption = 'SpouseName'
         Width = 147
@@ -49,7 +49,7 @@ object EmployeeFrme: TEmployeeFrme
         FieldName = 'DOB'
         Title.Caption = 'DOB'
         Width = 64
-        Editor = UniDateTimePicker2
+        Editor = ctlDateTimePicker
       end
       item
         FieldName = 'SSN'
@@ -109,14 +109,14 @@ object EmployeeFrme: TEmployeeFrme
         Width = 58
       end>
   end
-  object UniHiddenPanel1: TUniHiddenPanel
+  object ctlHiddenPanelCalendar: TUniHiddenPanel
     Left = 680
     Top = 104
     Width = 193
     Height = 201
     Hint = ''
     Visible = True
-    object UniDateTimePicker2: TUniDateTimePicker
+    object ctlDateTimePicker: TUniDateTimePicker
       Left = 48
       Top = 32
       Width = 120
@@ -127,21 +127,21 @@ object EmployeeFrme: TEmployeeFrme
       TabOrder = 1
     end
   end
-  object UniHiddenPanel2: TUniHiddenPanel
+  object ctlHiddenPanelSpouse: TUniHiddenPanel
     Left = 423
     Top = 104
     Width = 177
     Height = 201
     Hint = ''
     Visible = True
-    object UniButtonWidget1: TUniButtonWidget
+    object ctlUniButtonWidget: TUniButtonWidget
       Left = 32
       Top = 32
       Width = 120
       Hint = ''
       ImageIndex = 0
-      OnClick = UniButtonWidget1Click
-      Caption = 'UniButtonWidget1'
+      OnClick = ctlUniButtonWidgetClick
+      Caption = 'Spouse'
     end
   end
   inline Navigator: TNavigatorFrme
@@ -162,9 +162,9 @@ object EmployeeFrme: TEmployeeFrme
       end
     end
   end
-  object UniHiddenPanel4: TUniHiddenPanel
-    Left = 104
-    Top = 181
+  object ctlHiddenPanelUSState: TUniHiddenPanel
+    Left = 160
+    Top = 104
     Width = 193
     Height = 124
     Hint = ''
@@ -186,9 +186,9 @@ object EmployeeFrme: TEmployeeFrme
       MatchFieldWidth = False
     end
   end
-  object UniHiddenPanel3: TUniHiddenPanel
-    Left = 240
-    Top = 311
+  object ctlHiddenPanelUSState2: TUniHiddenPanel
+    Left = 160
+    Top = 263
     Width = 193
     Height = 124
     Hint = ''
@@ -212,12 +212,12 @@ object EmployeeFrme: TEmployeeFrme
   end
   object dsrMain: TDataSource
     DataSet = UniMainModule.qryEmployee
-    Left = 104
+    Left = 32
     Top = 56
   end
   object dsrStates: TDataSource
     DataSet = UniMainModule.mtStates
-    Left = 48
-    Top = 152
+    Left = 104
+    Top = 56
   end
 end

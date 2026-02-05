@@ -18,7 +18,7 @@ object PersonDictFrm: TPersonDictFrm
     Width = 712
     Height = 333
     Hint = ''
-    DataSource = DataSource1
+    DataSource = dsrMain
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgConfirmDelete, dgAutoRefreshRow]
     LoadMask.Message = 'Loading data...'
     Align = alClient
@@ -63,7 +63,7 @@ object PersonDictFrm: TPersonDictFrm
     DesignSize = (
       712
       45)
-    object UniButton2: TUniButton
+    object btnCancel: TUniButton
       Left = 17
       Top = 11
       Width = 75
@@ -74,16 +74,16 @@ object PersonDictFrm: TPersonDictFrm
       Anchors = [akLeft, akBottom]
       TabOrder = 1
     end
-    object UniButton1: TUniButton
+    object btnOK: TUniButton
       Left = 618
-      Top = 11
+      Top = 6
       Width = 75
       Height = 25
       Hint = ''
       Caption = 'OK'
       Anchors = [akRight, akBottom]
       TabOrder = 2
-      OnClick = UniButton1Click
+      OnClick = btnOKClick
     end
   end
   inline Navigator: TNavigatorFrme
@@ -100,25 +100,20 @@ object PersonDictFrm: TPersonDictFrm
       Width = 712
       ShowHint = True
       ParentShowHint = False
-      ExplicitTop = -5
       ExplicitWidth = 712
       inherited btnFilter: TUniToolButton
         Transparency = toNone
         Caption = 'Filter'
-        ExplicitLeft = 396
-        ExplicitWidth = 23
-        ExplicitHeight = 22
       end
       inherited ctlUniDBNavigator: TUniDBNavigator
-        Height = 42
         ShowHint = True
-        DataSource = DataSource1
+        DataSource = dsrMain
       end
     end
   end
-  object DataSource1: TDataSource
+  object dsrMain: TDataSource
     DataSet = UniMainModule.qryPersonDict
-    Left = 104
-    Top = 80
+    Left = 56
+    Top = 40
   end
 end

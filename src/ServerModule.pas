@@ -16,7 +16,7 @@ interface
 
 uses
   Classes, SysUtils, uniGUIServer, uniGUIMainModule, uniGUIApplication,
-  uniGUITypes, uIdContext, uIdCookie, uIdCustomHTTPServer, uClientTracker;
+  uniGUITypes, uniGUIVars, uIdContext, uIdCookie, uIdCustomHTTPServer, uClientTracker;
 
 type
   TUniServerModule = class(TUniGUIServerModule)
@@ -40,9 +40,6 @@ var
 implementation
 
 {$R *.dfm}
-
-uses
-  uniGUIVars;
 
 function UniServerModule: TUniServerModule;
 begin
@@ -108,6 +105,7 @@ begin
   end;
 
 end;
+
 
 initialization
   RegisterServerModuleClass(TUniServerModule);
