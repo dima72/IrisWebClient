@@ -204,7 +204,9 @@ begin
       DriverID=ODBC
       ----------------------
     }
-    FDConnection.Params.LoadFromFile('connection.ini');
+    FDConnection.Params.Assign(UniServerModule.TestConnection.Params);
+    FDConnection.Connected := True;
+
     FCache := TObjectDictionary<string, TUniFrame>.Create();
     for I := 0 to ComponentCount - 1 do
       if Components[I] is TFDQuery then

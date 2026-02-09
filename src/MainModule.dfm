@@ -6,11 +6,7 @@ object UniMainModule: TUniMainModule
   Width = 640
   object FDConnection: TFDConnection
     Params.Strings = (
-      'DataSource=myCache'
-      'User_Name=_SYSTEM'
-      'Password=IRIS12345'
       'ODBCDriver=InterSystems IRIS ODBC35'
-      'Database=CLIENTAPP'
       'DriverID=ODBC')
     LoginPrompt = False
     Left = 24

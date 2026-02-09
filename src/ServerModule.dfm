@@ -7,6 +7,7 @@ object UniServerModule: TUniServerModule
   Bindings = <>
   CustomFiles.Strings = (
     'login.html')
+  ServerLimits.MaxSessions = 30
   SSL.SSLOptions.RootCertFile = 'root.pem'
   SSL.SSLOptions.CertFile = 'cert.pem'
   SSL.SSLOptions.KeyFile = 'key.pem'
@@ -20,4 +21,8 @@ object UniServerModule: TUniServerModule
   OnHTTPCommand = UniGUIServerModuleHTTPCommand
   Height = 480
   Width = 640
+  object TestConnection: TFDConnection
+    Left = 24
+    Top = 24
+  end
 end

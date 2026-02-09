@@ -16,10 +16,14 @@ interface
 
 uses
   Classes, SysUtils, uniGUIServer, uniGUIMainModule, uniGUIApplication,
-  uniGUITypes, uniGUIVars, uIdContext, uIdCookie, uIdCustomHTTPServer, uClientTracker;
+  uniGUITypes, uniGUIVars, uIdContext, uIdCookie, uIdCustomHTTPServer, uClientTracker,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client;
 
 type
   TUniServerModule = class(TUniGUIServerModule)
+    TestConnection: TFDConnection;
     procedure UniGUIServerModuleHTTPCommand(ARequestInfo: TIdHTTPRequestInfo;
       AResponseInfo: TIdHTTPResponseInfo; var Handled: Boolean);
     procedure UniGUIServerModuleCreate(Sender: TObject);
@@ -53,6 +57,33 @@ end;
 
 procedure TUniServerModule.UniGUIServerModuleCreate(Sender: TObject);
 begin
+
+  if not FileExists('login.html') then
+    raise Exception.Create('Missing login.html. Server cannot be started.');
+  with TestConnection do begin
+    if FileExists('connection.ini') then
+      Params.LoadFromFile('connection.ini')
+    else begin
+    //supossedly running in a container and using Environment Variables
+      Params.Add('DriverID=ODBC');
+      Params.Add('ODBCDriver=InterSystems IRIS ODBC35');
+      Params.Add('Server=' + GetEnvironmentVariable('IRIS_HOST'));
+      Params.Add('Port=' + GetEnvironmentVariable('IRIS_PORT'));
+      Params.Add('Database=' + GetEnvironmentVariable('IRIS_NAMESPACE'));
+      Params.Add('User_Name=' + GetEnvironmentVariable('IRIS_USER'));
+      Params.Add('Password=' + GetEnvironmentVariable('IRIS_PASSWORD'));
+    end;
+    Connected := True;
+    Connected := False;
+  end;
+  FrameworkFilesRoot :=
+  IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Framework';
+  ExtRoot := IncludeTrailingPathDelimiter(FrameworkFilesRoot) + 'uniGUI' +
+    PathDelim + 'ext-7.9.0' + PathDelim;
+  UniRoot:= IncludeTrailingPathDelimiter(FrameworkFilesRoot) + 'uniGUI' +
+    PathDelim + 'uni-1.95.0.1610' + PathDelim;
+  UniPackagesRoot := IncludeTrailingPathDelimiter(FrameworkFilesRoot) + 'uniGUI' +
+    PathDelim + 'ext-7.9.0' + PathDelim + 'ext-addons' + PathDelim + 'packages' + PathDelim;
   ClientTracker := TClientTracker.Create(StartPath + 'clients.ini');
 end;
 

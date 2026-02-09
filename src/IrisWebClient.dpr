@@ -9,9 +9,7 @@ program
 
 uses
   uniGUIISAPI,
-  Winapi.Windows,
   Forms,
-  SysUtils,
   FireDAC.Comp.Client,
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
   MainModule in 'MainModule.pas' {UniMainModule: TUniGUIMainModule},
@@ -33,34 +31,8 @@ exports
   TerminateExtension;
 {$endif}
 
-procedure WinMsg(const Text, Caption: string; Flags: UINT = MB_OK or MB_ICONINFORMATION);
-begin
-  MessageBoxW(0, PWideChar(Text), PWideChar(Caption), Flags);
-end;
-
 begin
 {$ifdef UNIGUI_VCL}
-  if not FileExists('login.html') then begin
-    WinMsg('Missing login.html. Server cannot be started.', 'Critical Error');
-    Exit;
-  end;
-  if not FileExists('connection.ini') then begin
-    WinMsg('connection.ini. Server cannot be started.', 'Critical Error');
-    Exit;
-  end;
-  //testing connection to IRIS.
-  with TFDConnection.Create(nil) do begin
-    try
-    Params.LoadFromFile('connection.ini');
-    Connected := True;
-    Free;
-    except
-      on E: Exception do begin
-        WinMsg('Testing connection to IRIS:' + E.Message, 'Critical Error');
-        Exit;
-      end;
-    end;
-  end;
   ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   TUniServerModule.Create(Application);
