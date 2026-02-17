@@ -1,5 +1,11 @@
-<h1>IrisWebClient</h1>
-<p><b>Rich GUI web application for the InterSystems IRIS database</b></p>
+<h2>
+<p>
+<a href="https://dima72.github.io/IrisWebClient/DockerInstallationGuide.html">📘 Full Docker Installation Guide:</a>
+</p>
+</h2>
+
+<h1>IrisWebClient runs on Windows and Linux hosting</h1>
+<p><b>The Rich GUI web application for the InterSystems IRIS database</b></p>
 
 <p>
 A modern web client built with <b>Delphi + uniGUI</b> and connected to 
@@ -8,32 +14,42 @@ The application demonstrates full <b>CRUD operations</b>, referential property h
 and IRIS-native filtering using implicit JOINs.
 </p>
 
-<h2>How to Test</h2>
-<p><b>If you want to test the app without installing anything:</b><p>
-<a href="https://demo.irisclient.org">https://demo.irisclient.org</a>
-<p> 
-Login: demo<br>
-Password: demo
+<!-- Quick Start badges -->
+<p align="center">
+  <a href="#quick-start">
+    <img src="https://img.shields.io/badge/Quick%20Start-IrisWebClient-blue?style=for-the-badge">
+  </a>
+  <a href="https://github.com/dima72/IrisWebClient/pkgs/container/iriswebclient-backup">
+    <img src="https://img.shields.io/badge/Docker-ghcr.io%2Fdima72%2Firiswebclient--backup%3Av1-green?style=for-the-badge">
+  </a>
+  <a href="https://demo.irisclient.org/login.html">
+    <img src="https://img.shields.io/badge/Live%20Demo-demo.irisclient.org-orange?style=for-the-badge">
+  </a>
+
 </p>
 
 <h2>Features</h2>
+
 <ul>
-  <li><b>Cross‑Platform Deployment</b></li>
-  <ul>
-    <li>Windows: Service, Standalone EXE, ISAPI.</li>
-    <li>Linux: Standalone executable or Apache module.</li>
-    <li>Linux 64‑bit builds compiled via Delphi FireMonkey.</li>
-  </ul>
+  <li><b>Multiplatform Deployment</b> — Windows and Linux supported
+    <ul>
+      <li><b>Linux:</b> Standalone ELF executable, Apache module</li>
+      <li><b>Windows:</b> Service, Standalone EXE, ISAPI</li>
+    </ul>
+  </li>
+
   <li><b>Full CRUD</b> (Create, Read, Update, Delete) for IRIS persistent classes</li>
-  <li><b>Insert/update referential properties</b> such as:
+
+  <li><b>Insert/Update of Referential Properties</b>
     <ul>
       <li>Person → Spouse</li>
       <li>Employee → Company</li>
     </ul>
   </li>
-  <li><b>IRIS implicit JOIN filtering:</b>:
+
+  <li><b>IRIS Implicit JOIN Filtering</b>
     <ul>
-      <li>Filter by nested referential fields.</li>
+      <li>Filter by nested referential fields</li>
       <li>Examples:
         <ul>
           <li>Person.Spouse.Name</li>
@@ -43,10 +59,28 @@ Password: demo
       </li>
     </ul>
   </li>
-  <li>Rich web UI built with uniGUI.</li>
-  <li>ODBC connectivity for SQL access to IRIS.</li>
-  <li>Zero‑installation browser client.</li>
+
+  <li>Rich web UI built with uniGUI</li>
+  <li>ODBC connectivity for SQL access to IRIS</li>
+  <li>Zero‑installation browser client</li>
 </ul>
+
+## Quick Start
+<h2>How to Test</h2>
+<p><b>If you want to test the app without installing anything:</b><p>
+<a href="https://demo.irisclient.org">https://demo.irisclient.org</a>
+<p> 
+Login: demo<br>
+Password: demo
+</p>
+<h2>
+<p><a href="https://dima72.github.io/IrisWebClient/DockerInstallationGuide.html">IrisWebClient – Docker Installation Guide</a> </p>
+</h2>
+
+<h2>
+<p><a href="https://dima72.github.io/IrisWebClient/ODBCInstallationGuide.html">ODBC Installation Guide</a> </p>
+</h2>
+
 
 <h2>Architecture Overview</h2>
 <ul>

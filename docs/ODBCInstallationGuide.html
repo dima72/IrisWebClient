@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>IrisWebClient – Docker Installation Guide</title>
+
+<!-- GitHub-like styling -->
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.6;
+    color: #24292e;
+  }
+  pre {
+    background: #f6f8fa;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    border: 1px solid #d0d7de;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  h2, h3 {
+    border-bottom: 1px solid #d0d7de;
+    padding-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h2 id="docker-installation">IrisWebClient – ODBC Installation Guide</h2>
+
+<h3>/etc/odbc.ini</h3>
+<pre><code>
+[ODBC Data Sources]
+User = User
+Userunixodbc = Userunixodbc
+
+[User]
+Driver          = InterSystems IRIS ODBC35
+Description     = IRIS ODBC driver
+Host            = localhost
+Namespace       = USER
+UID             = odbcuser
+Password        = .....
+Port            = 1972
+Protocol        = TCP
+Query Timeout   = 1
+Static Cursors  = 0
+Trace           = off
+TraceFile       = /tmp/iodbctrace.log
+Authentication Method   = 0
+Security Level  = 2
+Service Principal Name = iris/localhost.domain.com</code></pre>
+
+<p>The command to test DSN named User</p>
+<pre><code>isql -v User</code></pre>
+<p></p>
+<pre><code>
+root@56919de89e9b:/# isql -v User
++---------------------------------------+
+| Connected!                            |
+|                                       |
+| sql-statement                         |
+| help [tablename]                      |
+| echo [string]                         |
+| quit                                  |
+|                                       |
++---------------------------------------+
+SQL>
+</code></pre>
+
+<p>List all available DSNs<p>
+<pre><code>
+odbcinst -q -s
+</code></pre>
+
+<p></p>
+<h3>/etc/odbcinst.ini</h3>
+<p>This file should contain only driver definitions, not DSNs</p>
+<pre><code>
+[InterSystems IRIS ODBC35]
+Description=InterSystems IRIS ODBC Driver
+Driver=/home/irisowner/bin/libirisodbcuw35.so
+Setup=/home/irisowner/bin/libirisodbcuw35.so
+UsageCount=2
+</code></pre>
+
+<p>Example: FireDAC using IRIS ODBC Driver in Delphi</p>
+<pre><code>
+  with Connection do begin
+      DriverName := 'ODBC';
+      Params.Add('DriverID=ODBC');
+      Params.Add('DataSource=User');
+      Params.Add('UID=odbcuser');
+      Params.Add('PWD=.....');
+      Params.Add('ODBCAdvanced=Server=localhost;Port=1972;Namespace=USER;');
+      LoginPrompt := False;
+	  Connected := True;
+   end;
+</code></pre>   
+
+
+</body>
+</html>
+

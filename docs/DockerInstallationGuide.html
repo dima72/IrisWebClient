@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>IrisWebClient – Docker Installation Guide</title>
+
+<!-- GitHub-like styling -->
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.6;
+    color: #24292e;
+  }
+  pre {
+    background: #f6f8fa;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    border: 1px solid #d0d7de;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  h2, h3 {
+    border-bottom: 1px solid #d0d7de;
+    padding-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h2 id="docker-installation">IrisWebClient – Docker Installation Guide</h2>
+
+<h3>1. Download the Docker Image</h3>
+<pre><code>docker pull ghcr.io/dima72/iriswebclient-backup:v1
+</code></pre>
+<p>This creates the local image <code>ghcr.io/dima72/iriswebclient-backup:v1</code>.</p>
+
+<h3>2. Ensure the Web Port Is Free</h3>
+<p>Default web port: <code>8077</code></p>
+<pre><code>netstat -ano | findstr :8077
+</code></pre>
+<p>If the port is busy, use another port.</p>
+
+<h3>3. Create the Container</h3>
+<pre><code>
+docker create --name iriswebclient-auto-1 ^
+  -p 52773:52773 ^
+  -p 8077:8077 ^
+  ghcr.io/dima72/iriswebclient-backup:v1
+</code></pre>
+<p>Use <code>-p hostPort:8077</code> to remap the default internal port if needed.</p>
+
+<h3>4. Start the Container and Enter Shell</h3>
+<pre><code>docker start iriswebclient-auto-1 && docker exec -it --user root -w / iriswebclient-auto-1 bash
+</code></pre>
+
+<h3>5. Start the IrisWebClient Application</h3> 
+<p>The command above opens an interactive Bash shell inside the container.</p>
+<p>input <code>'iriswebclient'</code> - the command to start IrisWebClient executable. e.g.</p> 
+<pre><code>root@ece66fc0989c:/# iriswebclient</code></pre>
+
+<h3>6. Open the Web Interface</h3>
+<p>Navigate to: <a href="http://localhost:8089/">http://localhost:8077/</a></p>
+
+</body>
+</html>
+
